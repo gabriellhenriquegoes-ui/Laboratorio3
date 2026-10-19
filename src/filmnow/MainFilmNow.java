@@ -88,7 +88,7 @@ public class MainFilmNow {
      */
     private static void mostrarFilmes(FilmNow fn) {
 
-        String[] filmes = fn.getFilmes();
+        Filme[] filmes = fn.getFilmes();
         for (int i = 0; i < filmes.length; i++) {
             if (filmes[i] != null) {
                 System.out.println(formataFilme(i, filmes[i]));
@@ -105,7 +105,7 @@ public class MainFilmNow {
     private static void detalharFilme(FilmNow fn, Scanner scanner) {
         System.out.print("\nQual filme> ");
         int posicao = scanner.nextInt();
-        String filme = fn.getFilme(posicao);
+        Filme filme = fn.getFilme(posicao);
         System.out.println("Dados do filme:\n" + filme);
     }
 
@@ -116,7 +116,7 @@ public class MainFilmNow {
      * @param filme O filme a ser impresso.
      * @return A String formatada.
      */
-    private static String formataFilme(int posicao, String filme) {
+    private static String formataFilme(int posicao, Filme filme) {
         return posicao + " - " + filme;
     }
 
@@ -129,12 +129,26 @@ public class MainFilmNow {
     private static void adicionaFilme(FilmNow fn, Scanner scanner) {
         System.out.print("\nPosição no sistema> ");
         int posicao = scanner.nextInt();
+        scanner.nextLine();
+
+        if(posicao < 0 || posicao >= 100){
+            System.out.println("POSIÇÃO INVÁLIDA");
+            return;
+        }
         System.out.print("\nNome> ");
-        String nome = scanner.next();
+        String nome = scanner.nextLine();
+        if("".equals(nome.trim())){
+            System.out.println("FILME INVALIDO");
+            return;
+        }
         System.out.print("\nAno> ");
         String ano = scanner.next();
         System.out.print("\nLocal> ");
         String local = scanner.next();
+        if("".equals(nome.trim())){
+            System.out.println("FILME INVALIDO");
+            return;
+        }
         fn.cadastraFilme(posicao, nome, ano, local);
     }
 
