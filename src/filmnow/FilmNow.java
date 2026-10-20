@@ -25,6 +25,8 @@ public class FilmNow {
      * Acessa a lista de filmes mantida.
      *
      * @return O array de filmes.
+     * @return O array de filmes.
+     * @return O array de filmes.
      */
     public Filme[] getFilmes() {
         return this.filmes.clone();
@@ -66,6 +68,12 @@ public class FilmNow {
         return false;
     }
 
+    /**
+     * Verifica se esse filme já foi cadastrado.
+     *
+     * @param filme o filme a ser verficiado.
+     * @return valor booleano indicando se o filme já existe.
+     */
     private boolean jaexiste(Filme filme){
         for (int i = 0; i < filmes.length; i++) {
             if (this.filmes[i] != null && this.filmes[i].equals(filme)) {
@@ -74,12 +82,36 @@ public class FilmNow {
         }
         return false;
     }
+
+    /**
+     * Metodo para adicionar um filme a hot list e alterar seus status para hot.
+     *
+     * @param filme o filme para adicionar a hot list.
+     * @param posição a posição para adicionar na hot list.
+     * @return o valor booleano indicando se foi possivel adicionar a hot list.
+     */
     public boolean atribuirHot(int filme, int posição){
         if(this.filmes[filme].getStatus().equals("")){
             hotList[posição] = this.filmes[filme];
+            this.filmes[posição].setStatus("\uD83D\uDD25");
             return true;
         }else{
             return false;
         }
+    }
+
+    /**
+     * Remove o filme da hot list.
+     *
+     * @param posicao a posição do filme que deve ser removido.
+     * @return o valor booleano indicando se foi possivel remover o filme da hot list.
+     */
+    public boolean removerHot(int posicao) {
+        if (this.hotList[posicao] != null) {
+            this.hotList[posicao] = null;
+            this.filmes[posicao].setStatus("");
+            return true;
+        }
+        return false;
     }
 }

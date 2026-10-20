@@ -78,8 +78,13 @@ public class MainFilmNow {
                 break;
             case "E":
                 exibirHotList(fn);
+                break;
             case "H":
-
+                atribuirHot(fn, scanner);
+                break;
+            case "R":
+                removerHot(fn, scanner);
+                break;
             case "S":
                 sai();
                 break;
@@ -113,7 +118,7 @@ public class MainFilmNow {
         System.out.print("\nQual filme> ");
         int posicao = scanner.nextInt();
         Filme filme = fn.getFilme(posicao);
-        System.out.println("Dados do filme:\n" + filme);
+        System.out.println(filme);
     }
 
     /**
@@ -164,6 +169,12 @@ public class MainFilmNow {
         }
     }
 
+    /**
+     * Atribuir um filme como hot e adiciona ele a Hotlist.
+     *
+     * @param fn O sistema FilmNow a ser manipulado.
+     * @param scanner Scanner para pedir informações do contato.
+     */
     private static void atribuirHot(FilmNow fn, Scanner scanner) {
         System.out.print("\nFilme> ");
         int filme = scanner.nextInt();
@@ -188,12 +199,40 @@ public class MainFilmNow {
 
     }
 
+    /**
+     * Imprime lista de filmes hot
+     * .
+     * @param fn O sistema FilmNow a ser manipulado.
+     */
     private static void exibirHotList(FilmNow fn){
         Filme[] filmes = fn.getHotList();
         for (int i = 0; i < filmes.length; i++) {
             if (filmes[i] != null) {
                 System.out.println(formataFilme(i, filmes[i].getNome())+", "+filmes[i].getAno());
             }
+        }
+    }
+
+    /**
+     * Remove um filme da hot list.
+     *
+     * @param fn O sistema FilmNow a ser manipulado.
+     * @param scanner Scanner para pedir informações do contato.
+     */
+    private static void removerHot(FilmNow fn, Scanner scanner){
+        System.out.print("\nPosição> ");
+        int posicao = scanner.nextInt();
+        scanner.nextLine();
+        if(posicao < 0 || posicao >= 10){
+            System.out.println("POSIÇÃO INVÁLIDA");
+            return;
+        }
+        boolean removeu = fn.removerHot(posicao);
+
+        if(removeu){
+            System.out.println("Filme removido da HotList");
+        }else{
+            System.out.println("Não foi possivel remover o filme da HotList");
         }
     }
 

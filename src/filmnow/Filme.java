@@ -40,10 +40,20 @@ public class Filme {
         return this.ano;
     }
 
+    /**
+     * Atribui um novo status ao filme.
+     *
+     * @param novo o novo status do filme.
+     */
     public void setStatus(String novo){
         this.status = novo;
     }
 
+    /**
+     * Pega o status  do filme.
+     *
+     * @return o status.
+     */
     public String getStatus(){
         return this.status;
     }
@@ -54,7 +64,7 @@ public class Filme {
      */
     @Override
     public String toString(){
-        return this.nome+", "+this.ano+'\n'+this.local;
+        return this.status + ' ' + this.nome+", "+this.ano+'\n'+this.local;
     }
 
     /**
