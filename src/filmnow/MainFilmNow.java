@@ -50,6 +50,9 @@ public class MainFilmNow {
                         "(M)Mostrar todos\n" +
                         "(D)Detalhar filme\n" +
                         "(S)air\n" +
+                        "(E)Exibir HotList\n"+
+                        "(H)Atribuir Hot\n"+
+                        "(R)Remover Hot\n"+
                         "\n" +
                         "Opção> ");
         return scanner.next().toUpperCase();
@@ -73,6 +76,10 @@ public class MainFilmNow {
             case "D":
                 detalharFilme(fn, scanner);
                 break;
+            case "E":
+                exibirHotList(fn);
+            case "H":
+
             case "S":
                 sai();
                 break;
@@ -91,7 +98,7 @@ public class MainFilmNow {
         Filme[] filmes = fn.getFilmes();
         for (int i = 0; i < filmes.length; i++) {
             if (filmes[i] != null) {
-                System.out.println(formataFilme(i, filmes[i]));
+                System.out.println(formataFilme(i, filmes[i].getNome()));
             }
         }
     }
@@ -116,7 +123,7 @@ public class MainFilmNow {
      * @param filme O filme a ser impresso.
      * @return A String formatada.
      */
-    private static String formataFilme(int posicao, Filme filme) {
+    private static String formataFilme(int posicao, String filme) {
         return posicao + " - " + filme;
     }
 
@@ -149,7 +156,45 @@ public class MainFilmNow {
             System.out.println("FILME INVALIDO");
             return;
         }
-        fn.cadastraFilme(posicao, nome, ano, local);
+        boolean cadastrou = fn.cadastraFilme(posicao, nome, ano, local);
+        if(cadastrou){
+            System.out.println("FILME ADICIONADO");
+        }else{
+            System.out.println("FILME JA ADICIONADO");
+        }
+    }
+
+    private static void atribuirHot(FilmNow fn, Scanner scanner) {
+        System.out.print("\nFilme> ");
+        int filme = scanner.nextInt();
+        scanner.nextLine();
+        if(filme < 0 || filme >= 100 ){
+            System.out.println("POSIÇÃO INVÁLIDA");
+            return;
+        }
+        System.out.print("\nPosição> ");
+        int posicao = scanner.nextInt();
+        scanner.nextLine();
+        if(posicao < 0 || posicao >= 10){
+            System.out.println("POSIÇÃO INVÁLIDA");
+            return;
+        }
+        boolean atribui = fn.atribuirHot(filme, posicao);
+        if(atribui){
+            System.out.println("ADICIONADO À HOTLIST NA POSIÇÃO "+posicao+'!');
+        }
+
+
+
+    }
+
+    private static void exibirHotList(FilmNow fn){
+        Filme[] filmes = fn.getHotList();
+        for (int i = 0; i < filmes.length; i++) {
+            if (filmes[i] != null) {
+                System.out.println(formataFilme(i, filmes[i].getNome())+", "+filmes[i].getAno());
+            }
+        }
     }
 
     /**
